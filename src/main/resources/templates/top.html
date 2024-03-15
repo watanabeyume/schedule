@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>スケジュール一覧</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  </head>
+  <body>
+	  <h1>スケジュール一覧</h1>
+	<div th:if="${list!=null and !list.empty}">
+		<table class="table table-striped">
+			<thead>
+				<th>#</th>
+				<th>名前</th>
+				<th>日付</th>
+				<th>件名</th>
+				<th>内容</th>
+				<th role="action"></th>
+			</thead>
+			<tbody>
+				<tr class="align-middle" th:each="item, stat : ${list}" th:object="${item}">
+					<td th:text="${stat.count}"></td>
+					<td th:text="|*{name}"></td>
+					<td th:text="*{day}"></td>
+					<td th:text="*{title}"></td>
+					<td th:text="*{detail}"></td>
+				
+					<td>
+						<a class="btn btn-warning" th:href="@{/detail/{id}(id=*{id})}">詳細</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div th:unless="${list!=null and !list.empty}">
+		<div class="alert alert-danger" role="alert">
+			データなし
+		</div>
+		<a th:href="@{'/logout/'}">ログアウト</a>
+	</div>
+	<a class="btn btn-warning" th:href="@{/add/}">投稿</a>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>
